@@ -12,5 +12,15 @@ namespace Employees.Domain.Repositories
         public static List<Employee> EmployeesList;
 
         public List<Employee> GetAll() => EmployeesList;
+
+        public void Add(Employee employeeToAdd)
+        {
+            EmployeesList.Add(employeeToAdd);
+        }
+
+        public void Remove(Employee employeeToRemove)
+        {
+            EmployeesList.Remove(employeeToRemove);
+        }
     }
 }

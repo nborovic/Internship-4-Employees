@@ -12,5 +12,15 @@ namespace Employees.Domain.Repositories
         public static List<Project> ProjectsList;
 
         public List<Project> GetAll() => ProjectsList;
+
+        public void Add(Project projectToAdd)
+        {
+            ProjectsList.Add(projectToAdd);
+        }
+
+        public void Remove(Project projectToRemove)
+        {
+            ProjectsList.Remove(projectToRemove);
+        }
     }
 }
