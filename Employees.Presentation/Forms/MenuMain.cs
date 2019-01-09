@@ -119,5 +119,19 @@ namespace Employees.Presentation.Forms
             searchTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             searchTextBox.AutoCompleteCustomSource.AddRange(employeeProjectArray);
         }
+
+        private void Details(object sender, EventArgs e)
+        {
+            switch (_option)
+            {
+                case "0":
+                    break;
+
+                default:
+                    var projectDetailsWindow = new ProjectDetails(employeeProjectListBox.SelectedItem as Project);
+                    projectDetailsWindow.ShowDialog();
+                    break;
+            }
+        }
     }
 }

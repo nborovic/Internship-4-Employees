@@ -89,6 +89,7 @@
             this.detailsButton.TabIndex = 5;
             this.detailsButton.Text = "Details";
             this.detailsButton.UseVisualStyleBackColor = true;
+            this.detailsButton.Click += new System.EventHandler(this.Details);
             // 
             // createButton
             // 
