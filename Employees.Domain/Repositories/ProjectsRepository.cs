@@ -9,7 +9,7 @@ namespace Employees.Domain.Repositories
 {
     public sealed class ProjectsRepository
     {
-        public static List<Project> ProjectsList;
+        public static List<Project> ProjectsList = new List<Project>();
 
         public List<Project> GetAll() => ProjectsList;
 
@@ -21,6 +21,17 @@ namespace Employees.Domain.Repositories
         public void Remove(Project projectToRemove)
         {
             ProjectsList.Remove(projectToRemove);
+        }
+
+        public void GenerateProjects()
+        {
+            var project1 = new Project("Dump Days", DateTime.Now.AddDays(12), DateTime.Now.AddDays(20));
+            var project2 = new Project("Dump Internship", DateTime.Now.AddDays(-14), DateTime.Now.AddDays(15));
+            var project3 = new Project("Sveuciliste natjecaji", DateTime.Now.AddDays(-6), DateTime.Now.AddDays(-2));
+
+            ProjectsList.Add(project1);
+            ProjectsList.Add(project2);
+            ProjectsList.Add(project3);
         }
     }
 }

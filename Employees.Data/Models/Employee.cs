@@ -15,16 +15,14 @@ namespace Employees.Data.Models
         public string Oib { get; set; }
         public DateTime Birthday { get; set; }
         public Role Role { get; set; }
-        public List<Tuple<Project, int>> ProjectsList { get; set; }
 
-        public Employee(string firstName, string lastName, string oib, DateTime birthday, Role role, List<Tuple<Project, int>> projectsList)
+        public Employee(string firstName, string lastName, string oib, DateTime birthday, Role role)
         {
             FirstName = firstName;
             LastName = lastName;
             Oib = oib;
             Birthday = birthday;
             Role = role;
-            ProjectsList = projectsList;
         }
 
         public override string ToString()

@@ -10,18 +10,19 @@ namespace Employees.Data.Models
     public class Project
     {
         public string Name { get; set; }
-        public List<Tuple<Employee, int>> EmployeesList { get; set; }
         public DateTime Start { get; set; }
         public DateTime Deadline { get; set; }
         public State State { get; set; }
 
-        public Project(string name, List<Tuple<Employee, int>> employeeList, DateTime start, DateTime deadline, State state)
+        public Project(string name, DateTime start, DateTime deadline)
         {
             Name = name;
-            EmployeesList = employeeList;
             Start = start;
             Deadline = deadline;
-            State = state;
+            var timeSpanZero = new TimeSpan(0, 0, 0, 0, 0);
+            State = (DateTime.Now - Start > timeSpanZero && DateTime.Now - Deadline < timeSpanZero) ? 
+                State.Active :  (DateTime.Now - deadline > timeSpanZero) ?
+                State.Finished : State.Planned;
         }
 
         public override string ToString()
