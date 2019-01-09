@@ -25,6 +25,17 @@ namespace Employees.Data.Models
             Role = role;
         }
 
+        public override bool Equals(object obj)
+        {
+            var item = obj as Employee;
+            return item != null && Oib == item.Oib;
+        }
+
+        public override int GetHashCode()
+        {
+            return Oib.GetHashCode();
+        }
+
         public override string ToString()
         {
             return $"{FirstName} {LastName} ({Role})";

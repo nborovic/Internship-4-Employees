@@ -25,6 +25,17 @@ namespace Employees.Data.Models
                 State.Finished : State.Planned;
         }
 
+        public override bool Equals(object obj)
+        {
+            var item = obj as Project;
+            return item != null && Name == item.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
+
         public override string ToString()
         {
             return $"{Name} ({State})";
