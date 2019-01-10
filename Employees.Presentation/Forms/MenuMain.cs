@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Employees.Data.Enums;
 using Employees.Data.Models;
 using Employees.Domain.Repositories;
 
@@ -74,15 +66,17 @@ namespace Employees.Presentation.Forms
             switch (_option)
             {
                 case "0":
-                    foreach (var employee in employeesList)
-                        if ($"{employee.FirstName} {employee.LastName}".Contains(searchTextBox.Text))
-                            employeeProjectListBox.SelectedItem = employee;
+                    if (employeesList != null)
+                        foreach (var employee in employeesList)
+                            if ($"{employee.FirstName} {employee.LastName}".Contains(searchTextBox.Text))
+                                employeeProjectListBox.SelectedItem = employee;
                     break;
 
                 default:
-                    foreach (var project in projectsList)
-                        if (project.Name.Contains(searchTextBox.Text))
-                            employeeProjectListBox.SelectedItem = project;
+                    if (projectsList != null)
+                        foreach (var project in projectsList)
+                            if (project.Name.Contains(searchTextBox.Text))
+                                employeeProjectListBox.SelectedItem = project;
                     break;
             }
         }
@@ -98,19 +92,23 @@ namespace Employees.Presentation.Forms
             switch (_option)
             {
                 case "0":
-                    foreach (var employee in employeesList)
-                    {
-                        employeeProjectArray[i] = $"{employee.FirstName} {employee.LastName}";
-                        i++;
-                    }
+                    if (employeesList != null)
+                        foreach (var employee in employeesList)
+                        {
+                            employeeProjectArray[i] = $"{employee.FirstName} {employee.LastName}";
+                            i++;
+                        }
+
                     break;
 
                 default:
-                    foreach (var project in projectsList)
-                    {
-                        employeeProjectArray[i] = project.Name;
-                        i++;
-                    }
+                    if (projectsList != null)
+                        foreach (var project in projectsList)
+                        {
+                            employeeProjectArray[i] = project.Name;
+                            i++;
+                        }
+
                     break;
             }
          
@@ -121,9 +119,17 @@ namespace Employees.Presentation.Forms
 
         private void Details(object sender, EventArgs e)
         {
+            if (employeeProjectListBox.SelectedItem == null)
+            {
+                MessageBox.Show(@"No employee/project selected!", @"Selection");
+                return;
+            }
+
             switch (_option)
             {
                 case "0":
+                    var employeeDetailsWindow = new EmployeeDetails(employeeProjectListBox.SelectedItem as Employee);
+                    employeeDetailsWindow.ShowDialog();
                     break;
 
                 default:
