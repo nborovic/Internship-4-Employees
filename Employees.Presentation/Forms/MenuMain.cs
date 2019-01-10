@@ -70,20 +70,19 @@ namespace Employees.Presentation.Forms
         {
             var employeesList = (_option == "0") ? employeeProjectListBox.Items.Cast<Employee>().ToList() : null;
             var projectsList = (_option == "1") ? employeeProjectListBox.Items.Cast<Project>().ToList() : null;
-            employeeProjectListBox.Items.Clear();
 
             switch (_option)
             {
                 case "0":
                     foreach (var employee in employeesList)
-                        if ($"{employee.FirstName} {employee.LastName}" == searchTextBox.Text)
-                            employeeProjectListBox.Items.Add(employee);
+                        if ($"{employee.FirstName} {employee.LastName}".Contains(searchTextBox.Text))
+                            employeeProjectListBox.SelectedItem = employee;
                     break;
 
                 default:
                     foreach (var project in projectsList)
-                        if (project.Name == searchTextBox.Text)
-                            employeeProjectListBox.Items.Add(project);
+                        if (project.Name.Contains(searchTextBox.Text))
+                            employeeProjectListBox.SelectedItem = project;
                     break;
             }
         }
