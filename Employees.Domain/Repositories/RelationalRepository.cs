@@ -29,22 +29,22 @@ namespace Employees.Domain.Repositories
 
             ProjectEmployeeList.Add(new Tuple<Project, List<Tuple<Employee, int>>>(projectsList[0], new List<Tuple<Employee, int>>()
             {
-                new Tuple<Employee, int>(employeesList[0], 11),
-                new Tuple<Employee, int>(employeesList[1], 8),
-                new Tuple<Employee, int>(employeesList[2], 7)
+                new Tuple<Employee, int>(employeesList[0], 19),
+                new Tuple<Employee, int>(employeesList[1], 15),
+                new Tuple<Employee, int>(employeesList[2], 10)
             }));
             ProjectEmployeeList.Add(new Tuple<Project, List<Tuple<Employee, int>>>(projectsList[1], new List<Tuple<Employee, int>>()
             {
-                new Tuple<Employee, int>(employeesList[1], 5),
+                new Tuple<Employee, int>(employeesList[1], 16),
                 new Tuple<Employee, int>(employeesList[2], 11)
             }));
             ProjectEmployeeList.Add(new Tuple<Project, List<Tuple<Employee, int>>>(projectsList[2], new List<Tuple<Employee, int>>()
             {
-                new Tuple<Employee, int>(employeesList[0], 8),
+                new Tuple<Employee, int>(employeesList[0], 22),
             }));
         }
 
-        public int CountOf(Project selectedProject, Role role)
+        public int CountOf_Role(Project selectedProject, Role role)
         {
             var counter = 0;
 
@@ -58,6 +58,29 @@ namespace Employees.Domain.Repositories
                 }
 
             return counter;
+        }
+
+        public int CountOf_State(Employee selectedEmployee, State state)
+        {
+            var counter = 0;
+
+            foreach (var relation in ProjectEmployeeList)
+                foreach (var employee in relation.Item2)
+                    if (selectedEmployee.Equals(employee.Item1) && state == relation.Item1.State)
+                        counter++;
+
+            return counter;
+        }
+
+        public int CountOfWeeklyWorkHours(Employee selectedEmployee)
+        {
+            var countOfWeeklyWorkHours = 0;
+            foreach (var relation in ProjectEmployeeList)
+                foreach (var employee in relation.Item2)
+                    if (selectedEmployee.Equals(employee.Item1))
+                        countOfWeeklyWorkHours += employee.Item2;
+
+            return countOfWeeklyWorkHours;
         }
     }
 }
