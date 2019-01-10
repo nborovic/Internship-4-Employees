@@ -13,6 +13,7 @@ namespace Employees.Data.Models
         public DateTime Start { get; set; }
         public DateTime Deadline { get; set; }
         public State State { get; set; }
+        public List<Tuple<Employee, int>> EmployeesList { get; set; }
 
         public Project(string name, DateTime start, DateTime deadline)
         {
@@ -23,6 +24,7 @@ namespace Employees.Data.Models
             State = (DateTime.Now - Start > timeSpanZero && DateTime.Now - Deadline < timeSpanZero) ? 
                 State.Active :  (DateTime.Now - deadline > timeSpanZero) ?
                 State.Finished : State.Planned;
+            EmployeesList = new List<Tuple<Employee, int>>();
         }
 
         public override bool Equals(object obj)

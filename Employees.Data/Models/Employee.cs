@@ -15,6 +15,7 @@ namespace Employees.Data.Models
         public string Oib { get; set; }
         public DateTime Birthday { get; set; }
         public Role Role { get; set; }
+        public List<Tuple<Project, int>> ProjectsList { get; set; }
 
         public Employee(string firstName, string lastName, string oib, DateTime birthday, Role role)
         {
@@ -23,6 +24,7 @@ namespace Employees.Data.Models
             Oib = oib;
             Birthday = birthday;
             Role = role;
+            ProjectsList = new List<Tuple<Project, int>>();
         }
 
         public override bool Equals(object obj)

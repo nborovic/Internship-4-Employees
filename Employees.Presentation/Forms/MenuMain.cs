@@ -10,7 +10,6 @@ namespace Employees.Presentation.Forms
     {
         private readonly EmployeesRepository _employeesRepository;
         private readonly ProjectsRepository _projectsRepository;
-        private readonly RelationalRepository _relationalRepository;
         private string _option;
 
         public MenuMain()
@@ -18,7 +17,6 @@ namespace Employees.Presentation.Forms
             InitializeComponent();
             _employeesRepository = new EmployeesRepository();
             _projectsRepository = new ProjectsRepository();
-            _relationalRepository = new RelationalRepository();
             _option = "0";
             GenerateEmployeesProjectsRelations();
             RefreshList();
@@ -27,9 +25,8 @@ namespace Employees.Presentation.Forms
 
         private void GenerateEmployeesProjectsRelations()
         {
-            _employeesRepository.GenerateEmployees();
-            _projectsRepository.GenerateProjects();
-            _relationalRepository.GenerateRelations();
+            _employeesRepository.SeedData();
+            _projectsRepository.SeedData();
         }
 
         private void RefreshList()
