@@ -38,12 +38,12 @@ namespace Employees.Domain.Repositories
             var employee2 = new Employee("Ante", "Antić", "90271366100", new DateTime(1999, 2, 2), Role.Designer);
             var employee3 = new Employee("Ivo", "Ivić", "47292640142", new DateTime(1997, 3, 3), Role.Accauntant);
 
-            ProjectsList[0].EmployeesList.Add(new Tuple<Employee, int>(employee1, 19));
-            ProjectsList[0].EmployeesList.Add(new Tuple<Employee, int>(employee2, 15));
-            ProjectsList[0].EmployeesList.Add(new Tuple<Employee, int>(employee3, 10));
-            ProjectsList[1].EmployeesList.Add(new Tuple<Employee, int>(employee3, 16));
-            ProjectsList[1].EmployeesList.Add(new Tuple<Employee, int>(employee2, 11));
-            ProjectsList[2].EmployeesList.Add(new Tuple<Employee, int>(employee1, 22));
+            ProjectsList[0].EmployeesList.Add(new Relation(employee1, 19));
+            ProjectsList[0].EmployeesList.Add(new Relation(employee2, 15));
+            ProjectsList[0].EmployeesList.Add(new Relation(employee3, 10));
+            ProjectsList[1].EmployeesList.Add(new Relation(employee3, 16));
+            ProjectsList[1].EmployeesList.Add(new Relation(employee2, 11));
+            ProjectsList[2].EmployeesList.Add(new Relation(employee1, 22));
         }
 
         public int CountOfProjects(Employee selectedEmployee, State? state = null)
@@ -52,8 +52,8 @@ namespace Employees.Domain.Repositories
 
             if (state == null) counter = selectedEmployee.ProjectsList.Count();
 
-            foreach (var project in selectedEmployee.ProjectsList)
-                if (project.Item1.State == state)
+            foreach (var relation in selectedEmployee.ProjectsList)
+                if (relation.Project.State == state)
                     counter++;
 
             return counter;

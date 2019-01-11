@@ -38,12 +38,12 @@ namespace Employees.Domain.Repositories
             var project2 = new Project("Dump Internship", DateTime.Now.AddDays(-14), DateTime.Now.AddDays(15));
             var project3 = new Project("Sveuciliste natjecaji", DateTime.Now.AddDays(-6), DateTime.Now.AddDays(-2));
 
-            EmployeesList[0].ProjectsList.Add(new Tuple<Project, int>(project1, 19));
-            EmployeesList[1].ProjectsList.Add(new Tuple<Project, int>(project1, 15));
-            EmployeesList[2].ProjectsList.Add(new Tuple<Project, int>(project1, 10));
-            EmployeesList[1].ProjectsList.Add(new Tuple<Project, int>(project2, 16));
-            EmployeesList[2].ProjectsList.Add(new Tuple<Project, int>(project2, 11));
-            EmployeesList[0].ProjectsList.Add(new Tuple<Project, int>(project3, 22));
+            EmployeesList[0].ProjectsList.Add(new Relation(project1, 19));
+            EmployeesList[1].ProjectsList.Add(new Relation(project1, 15));
+            EmployeesList[2].ProjectsList.Add(new Relation(project1, 10));
+            EmployeesList[1].ProjectsList.Add(new Relation(project2, 16));
+            EmployeesList[2].ProjectsList.Add(new Relation(project2, 11));
+            EmployeesList[0].ProjectsList.Add(new Relation(project3, 22));
         }
 
         public int CountOfEmployees(Project selectedProject, Role? role = null)
@@ -52,8 +52,8 @@ namespace Employees.Domain.Repositories
 
             if (role == null) counter = selectedProject.EmployeesList.Count();
 
-            foreach (var employee in selectedProject.EmployeesList)
-                if (employee.Item1.Role == role)
+            foreach (var relation in selectedProject.EmployeesList)
+                if (relation.Employee.Role == role)
                     counter++;
 
             return counter;
@@ -63,8 +63,8 @@ namespace Employees.Domain.Repositories
         {
             var countOfWeeklyWorkHours = 0;
 
-            foreach (var project in selectedEmployee.ProjectsList)
-                countOfWeeklyWorkHours += project.Item2;
+            foreach (var relation in selectedEmployee.ProjectsList)
+                countOfWeeklyWorkHours += relation.WeeklyWorkHours;
 
             return countOfWeeklyWorkHours;
         }

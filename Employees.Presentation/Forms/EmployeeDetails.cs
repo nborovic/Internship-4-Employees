@@ -49,11 +49,11 @@ namespace Employees.Presentation.Forms
         private void RefreshProjectsList(string state)
         {
             employeeProjectsListBox.Items.Clear();
-            foreach (var project in Employee.ProjectsList)
-                if (state.Contains(project.Item1.State.ToString()))
-                    employeeProjectsListBox.Items.Add(project.Item1);
+            foreach (var relation in Employee.ProjectsList)
+                if (state.Contains(relation.Project.State.ToString()))
+                    employeeProjectsListBox.Items.Add(relation.Project);
                 else if (state.Contains("All"))
-                    employeeProjectsListBox.Items.Add(project.Item1);
+                    employeeProjectsListBox.Items.Add(relation.Project);
         }
 
         private void RefreshProjectStateComboBox()
@@ -66,7 +66,7 @@ namespace Employees.Presentation.Forms
                 }
 
             statesComboBox.Items.Add($"All ({allCount})");
-            statesComboBox.Text = $"All ({allCount})";
+            statesComboBox.Text = $@"All ({allCount})";
         }
 
         private void StatesComboBoxChanged(object sender, EventArgs e)

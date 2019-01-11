@@ -25,7 +25,7 @@ namespace Employees.Presentation.Forms
             _selectedProject = selectedProject;
             _employeesRepository = new EmployeesRepository();
             projectNameTextBox.Text = _selectedProject.Name;
-            projectStartDeadlineTextBox.Text = $"{_selectedProject.Start:d} - {_selectedProject.Deadline:d}";
+            projectStartDeadlineTextBox.Text = $@"{_selectedProject.Start:d} - {_selectedProject.Deadline:d}";
             RefreshEmployeesListBox("All");
             RefreshRolesComboBox();
         }
@@ -33,11 +33,11 @@ namespace Employees.Presentation.Forms
         public void RefreshEmployeesListBox(string role)
         {
             employeesListBox.Items.Clear();
-                    foreach (var employee in _selectedProject.EmployeesList)
+                    foreach (var relation in _selectedProject.EmployeesList)
                         if (role.Contains("All"))
-                            employeesListBox.Items.Add($"{employee.Item1} - {employee.Item2} weekly work hours");
-                        else if (role.Contains(employee.Item1.Role.ToString()))
-                            employeesListBox.Items.Add($"{employee.Item1} - {employee.Item2} weekly work hours");
+                            employeesListBox.Items.Add($"{relation.Employee} - {relation.WeeklyWorkHours} weekly work hours");
+                        else if (role.Contains(relation.Employee.Role.ToString()))
+                            employeesListBox.Items.Add($"{relation.Employee} - {relation.WeeklyWorkHours} weekly work hours");
         }
 
         public void RefreshRolesComboBox()
@@ -50,7 +50,7 @@ namespace Employees.Presentation.Forms
                 }
 
             rolesComboBox.Items.Add($"All ({allCount})");
-            rolesComboBox.Text = $"All ({allCount})";
+            rolesComboBox.Text = $@"All ({allCount})";
         }
 
         private void RolesComboBoxChanged(object sender, EventArgs e)
