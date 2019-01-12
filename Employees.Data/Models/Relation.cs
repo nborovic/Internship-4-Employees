@@ -17,5 +17,10 @@
             Employee = employee;
             WeeklyWorkHours = weeklyWorkHours;
         }
+
+        public override string ToString()
+        {
+            return $"{Project}{Employee} - {WeeklyWorkHours} hours";
+        }
     }
 }
