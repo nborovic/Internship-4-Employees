@@ -151,5 +151,14 @@ namespace Employees.Presentation.Forms
                     break;
             }
         }
+
+        private void Delete(object sender, EventArgs e)
+        {
+            if (employeeProjectListBox.SelectedItem == null)
+                MessageBox.Show(@"No employee/project selected!", @"Selection");
+            else if (MessageBox.Show(@"Are you sure you want to delete this employee/project?", @"Delete",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                employeeProjectListBox.Items.Remove(employeeProjectListBox.SelectedItem);
+        }
     }
 }
