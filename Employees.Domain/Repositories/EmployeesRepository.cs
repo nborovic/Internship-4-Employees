@@ -27,7 +27,7 @@ namespace Employees.Domain.Repositories
         public void SeedData()
         {
             var employee1 = new Employee("Nino", "Borović", "75027076027", new DateTime(2000, 1, 1), Role.Programmer);
-            var employee2 = new Employee("Ante", "Antić", "90271366100", new DateTime(1999, 2, 2), Role.Designer);
+            var employee2 = new Employee("Ante Antunović", "Antić", "90271366100", new DateTime(1999, 2, 2), Role.Designer);
             var employee3 = new Employee("Ivo", "Ivić", "47292640142", new DateTime(1997, 3, 3), Role.Accauntant);
 
             EmployeesList.Add(employee1);
