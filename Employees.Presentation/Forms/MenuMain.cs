@@ -135,5 +135,21 @@ namespace Employees.Presentation.Forms
                     break;
             }
         }
+
+        private void Create(object sender, EventArgs e)
+        {
+            switch (_option)
+            {
+                case "0":
+                    var createEmployeeWindow = new CreateEmployee();
+                    createEmployeeWindow.ShowDialog();
+                    break;
+
+                default:
+                    var projectDetailsWindow = new ProjectDetails(employeeProjectListBox.SelectedItem as Project);
+                    projectDetailsWindow.ShowDialog();
+                    break;
+            }
+        }
     }
 }
