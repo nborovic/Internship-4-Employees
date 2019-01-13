@@ -154,7 +154,17 @@ namespace Employees.Presentation.Forms
                         break;
                     }
 
+            var employeeDetailsWindow = new EmployeeDetails(addedEmployee);
+            employeeDetailsWindow.ShowDialog();
             Close();
+        }
+
+        private void Back(object sender, EventArgs e)
+        {
+            Hide();
+            var employeeDetailsWindow = new EmployeeDetails(_selectedEmployee);
+            employeeDetailsWindow.Closed += (s, args) => Close();
+            employeeDetailsWindow.ShowDialog();
         }
     }
 }

@@ -37,6 +37,7 @@
             this.employeeProjectsListBox = new System.Windows.Forms.ListBox();
             this.statesComboBox = new System.Windows.Forms.ComboBox();
             this.editButton = new System.Windows.Forms.Button();
+            this.backButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // employeeToStringTextBox
@@ -124,19 +125,32 @@
             // 
             // editButton
             // 
-            this.editButton.Location = new System.Drawing.Point(132, 357);
+            this.editButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editButton.Location = new System.Drawing.Point(130, 357);
             this.editButton.Name = "editButton";
-            this.editButton.Size = new System.Drawing.Size(97, 32);
+            this.editButton.Size = new System.Drawing.Size(99, 32);
             this.editButton.TabIndex = 8;
             this.editButton.Text = "Edit";
             this.editButton.UseVisualStyleBackColor = true;
             this.editButton.Click += new System.EventHandler(this.Edit);
+            // 
+            // backButton
+            // 
+            this.backButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.backButton.Location = new System.Drawing.Point(12, 357);
+            this.backButton.Name = "backButton";
+            this.backButton.Size = new System.Drawing.Size(57, 32);
+            this.backButton.TabIndex = 21;
+            this.backButton.Text = "Back";
+            this.backButton.UseVisualStyleBackColor = true;
+            this.backButton.Click += new System.EventHandler(this.Back);
             // 
             // EmployeeDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(380, 401);
+            this.Controls.Add(this.backButton);
             this.Controls.Add(this.editButton);
             this.Controls.Add(this.statesComboBox);
             this.Controls.Add(this.employeeProjectsListBox);
@@ -164,5 +178,6 @@
         private System.Windows.Forms.ListBox employeeProjectsListBox;
         private System.Windows.Forms.ComboBox statesComboBox;
         private System.Windows.Forms.Button editButton;
+        private System.Windows.Forms.Button backButton;
     }
 }

@@ -17,18 +17,18 @@ namespace Employees.Presentation.Forms
     {
         private readonly EmployeesRepository _employeesRepository;
         private readonly ProjectsRepository _projectsRepository;
-        public Employee Employee;
+        private readonly Employee _selectedEmployee;
 
         public EmployeeDetails(Employee selectedEmployee)
         {
             InitializeComponent();
-            Employee = selectedEmployee;
+            _selectedEmployee = selectedEmployee;
             _employeesRepository = new EmployeesRepository();
             _projectsRepository = new ProjectsRepository();
             employeeToStringTextBox.Text = selectedEmployee.ToString();
             employeeBirthdayTextBox.Text += selectedEmployee.Birthday.ToString("d");
             oibTextBox.Text += selectedEmployee.Oib;
-            weeklyWorkHoursTextBox.Text += _employeesRepository.CountOfWeeklyWorkHours(Employee) + " hours";
+            weeklyWorkHoursTextBox.Text += _employeesRepository.CountOfWeeklyWorkHours(_selectedEmployee) + @" hours";
             RefreshColorIndicator();
             RefreshProjectsList("All");
             RefreshProjectStateComboBox();
@@ -36,7 +36,7 @@ namespace Employees.Presentation.Forms
 
         private void RefreshColorIndicator()
         {
-            var weeklyWorkHoursAsInt = _employeesRepository.CountOfWeeklyWorkHours(Employee);
+            var weeklyWorkHoursAsInt = _employeesRepository.CountOfWeeklyWorkHours(_selectedEmployee);
 
             if (weeklyWorkHoursAsInt >= 41)
                 weeklyWorkHoursColoredIndicator.BackColor = Color.Red;
@@ -49,7 +49,7 @@ namespace Employees.Presentation.Forms
         private void RefreshProjectsList(string state)
         {
             employeeProjectsListBox.Items.Clear();
-            foreach (var relation in Employee.ProjectsList)
+            foreach (var relation in _selectedEmployee.ProjectsList)
                 if (state.Contains(relation.Project.State.ToString()))
                     employeeProjectsListBox.Items.Add(relation.Project);
                 else if (state.Contains("All"))
@@ -60,8 +60,8 @@ namespace Employees.Presentation.Forms
         {
             var allCount = 0;
             foreach (var state in (State[]) Enum.GetValues(typeof(State)))
-                if (_projectsRepository.CountOfProjects(Employee, state) > 0) {          
-                    statesComboBox.Items.Add($"{state} ({_projectsRepository.CountOfProjects(Employee, state)})");
+                if (_projectsRepository.CountOfProjects(_selectedEmployee, state) > 0) {          
+                    statesComboBox.Items.Add($"{state} ({_projectsRepository.CountOfProjects(_selectedEmployee, state)})");
                     allCount++;
                 }
 
@@ -76,8 +76,15 @@ namespace Employees.Presentation.Forms
 
         private void Edit(object sender, EventArgs e)
         {
+            Hide();
             var editWindow = new CreateEmployee(Employee);
+            editWindow.Closed += (s, args) => Close();
             editWindow.ShowDialog();
+        }
+
+        private void Back(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

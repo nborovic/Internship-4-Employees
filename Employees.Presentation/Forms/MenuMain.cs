@@ -125,12 +125,16 @@ namespace Employees.Presentation.Forms
             switch (_option)
             {
                 case "0":
+                    Hide();
                     var employeeDetailsWindow = new EmployeeDetails(employeeProjectListBox.SelectedItem as Employee);
-                    employeeDetailsWindow.ShowDialog();
+                    employeeDetailsWindow.Closed += (s, args) => Show();
+                    employeeDetailsWindow.ShowDialog();                   
                     break;
 
                 default:
+                    Hide();
                     var projectDetailsWindow = new ProjectDetails(employeeProjectListBox.SelectedItem as Project);
+                    projectDetailsWindow.Closed += (s, args) => Show();
                     projectDetailsWindow.ShowDialog();
                     break;
             }
@@ -141,12 +145,16 @@ namespace Employees.Presentation.Forms
             switch (_option)
             {
                 case "0":
+                    Hide();
                     var createEmployeeWindow = new CreateEmployee();
+                    createEmployeeWindow.Closed += (s, args) => Show();
                     createEmployeeWindow.ShowDialog();
                     break;
 
                 default:
+                    Hide();
                     var createProjectWindow = new CreateProject();
+                    createProjectWindow.Closed += (s, args) => Show();
                     createProjectWindow.ShowDialog();
                     break;
             }
