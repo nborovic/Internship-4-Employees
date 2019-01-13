@@ -130,6 +130,7 @@
             this.editButton.TabIndex = 8;
             this.editButton.Text = "Edit";
             this.editButton.UseVisualStyleBackColor = true;
+            this.editButton.Click += new System.EventHandler(this.Edit);
             // 
             // EmployeeDetails
             // 

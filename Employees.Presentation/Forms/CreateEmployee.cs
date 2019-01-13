@@ -12,12 +12,28 @@ namespace Employees.Presentation.Forms
     {
         private readonly EmployeesRepository _employeesRepository = new EmployeesRepository();
         private readonly ProjectsRepository _projectsRepository = new ProjectsRepository();
+        private readonly Employee _selectedEmployee = null;
 
         public CreateEmployee()
         {
             InitializeComponent();
             RefreshProjectsList();
             RefreshRoles();
+        }
+
+        public CreateEmployee(Employee selectedEmployee)
+        {
+            InitializeComponent();
+            _selectedEmployee = selectedEmployee;
+            employeeFirstName.Text = selectedEmployee.FirstName;
+            employeeLastName.Text = selectedEmployee.LastName;
+            employeeOib.Text = selectedEmployee.Oib;
+            employeeBirthday.Text = selectedEmployee.Birthday.ToString();
+            RefreshAddedProjectsList();
+            RefreshRoles();
+            employeeRole.SelectedItem = selectedEmployee.Role;
+            RefreshProjectsList();
+            RemoveDuplicates();
         }
 
         public void RefreshRoles()
@@ -32,9 +48,27 @@ namespace Employees.Presentation.Forms
                 projectsListBox.Items.Add(project);
         }
 
+        public void RefreshAddedProjectsList()
+        {
+            foreach (var relation in _selectedEmployee.ProjectsList)
+                addedProjectsListBox.Items.Add(relation);
+        }
+
+        public void RemoveDuplicates()
+        {
+            var addedProjectsList = addedProjectsListBox.Items.Cast<Relation>().ToList();
+            var projectsList = projectsListBox.Items.Cast<Project>().ToList();
+
+            foreach (var project in projectsList)
+            foreach (var relation in addedProjectsList)
+                if (project.Equals(relation.Project))
+                    projectsListBox.Items.Remove(relation.Project);
+        }
+
         private void Add(object sender, EventArgs e)
         {
-            if (weeklyWorkHours.Text == "" || projectsListBox.SelectedItem == null)
+            if (weeklyWorkHours.Text == "" || projectsListBox.SelectedItem == null ||
+                int.Parse(weeklyWorkHours.Text) == 0)
             {
                 MessageBox.Show(@"No project selected or weekly work hours not inputted!", @"Selection");
                 return;
@@ -47,7 +81,7 @@ namespace Employees.Presentation.Forms
 
         private void Remove(object sender, EventArgs e)
         {
-            var selectedProject = addedProjectsListBox.SelectedItem as Tuple<Project, int>;
+            var selectedProject = addedProjectsListBox.SelectedItem as Relation;
 
             if (selectedProject == null)
             {
@@ -55,7 +89,7 @@ namespace Employees.Presentation.Forms
                 return;
             }
 
-            projectsListBox.Items.Add(selectedProject.Item1);
+            projectsListBox.Items.Add(selectedProject.Project);
             addedProjectsListBox.Items.Remove(selectedProject);
         }
 
@@ -79,28 +113,46 @@ namespace Employees.Presentation.Forms
 
             var birthday = Convert.ToDateTime(employeeBirthday.Text);
 
-            if (DateTime.Now - birthday < DateTime.Now - DateTime.Now.AddYears(-18))
-            {
-                MessageBox.Show(@"Employee is younger than 18 years old", @"Invalid input");
-                return false;
-            }
-
-            return true;
+            if (DateTime.Now - birthday >= DateTime.Now - DateTime.Now.AddYears(-18)) return true;
+            MessageBox.Show(@"Employee is younger than 18 years old", @"Invalid input");
+            return false;
         }
 
         private void Save(object sender, EventArgs e)
         {
+            if (_selectedEmployee != null)
+            {
+                foreach (var project in _projectsRepository.GetAll())
+                foreach (var relation in project.EmployeesList)
+                    if (_selectedEmployee.Equals(relation.Employee))
+                    {
+                        project.EmployeesList.Remove(relation);
+                        break;
+                    }
+
+                _employeesRepository.Remove(_selectedEmployee);
+            }
+
             var projectsList = addedProjectsListBox.Items.Cast<Relation>().ToList();
 
             if (!CheckFormatInput()) return;
-            var employeeToAdd = new Employee(employeeFirstName.Text.NameFormatting(), employeeLastName.Text.NameFormatting(), employeeOib.Text, Convert.ToDateTime(employeeBirthday.Text),
-                (Role)employeeRole.SelectedItem);
+            var employeeToAdd = new Employee(employeeFirstName.Text.NameFormatting(),
+                employeeLastName.Text.NameFormatting(), employeeOib.Text, Convert.ToDateTime(employeeBirthday.Text),
+                (Role) employeeRole.SelectedItem);
             _employeesRepository.Add(employeeToAdd);
 
-            foreach (var employee in _employeesRepository.GetAll())
-                if (employeeToAdd.Equals(employee))
-                    foreach (var relation in projectsList)
-                        employee.ProjectsList.Add(relation);
+            var addedEmployee = _employeesRepository.GetAll().Find(x => x.Oib == employeeToAdd.Oib);
+
+            foreach (var relationProject in projectsList)
+                addedEmployee.ProjectsList.Add(relationProject);
+
+            foreach (var project in _projectsRepository.GetAll())
+                foreach (var relation in projectsList)
+                    if (relation.Project.Equals(project))
+                    {
+                        project.EmployeesList.Add(new Relation(addedEmployee, relation.WeeklyWorkHours));
+                        break;
+                    }
 
             Close();
         }
