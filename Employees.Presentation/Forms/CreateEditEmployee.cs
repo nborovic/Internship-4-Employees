@@ -132,6 +132,13 @@ namespace Employees.Presentation.Forms
 
             var birthday = Convert.ToDateTime(employeeBirthday.Text);
 
+
+            if (DateTime.Now - birthday >= DateTime.Now - DateTime.Now.AddYears(-62)) // Let's say that 62 years is limit for working age
+            {
+                MessageBox.Show(@"Employee is older than 62 years old", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
             if (DateTime.Now - birthday >= DateTime.Now - DateTime.Now.AddYears(-18)) return true;
             MessageBox.Show(@"Employee is younger than 18 years old", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
