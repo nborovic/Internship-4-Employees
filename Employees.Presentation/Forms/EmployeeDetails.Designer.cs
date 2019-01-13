@@ -111,6 +111,7 @@
             this.employeeProjectsListBox.Location = new System.Drawing.Point(40, 129);
             this.employeeProjectsListBox.Name = "employeeProjectsListBox";
             this.employeeProjectsListBox.Size = new System.Drawing.Size(382, 184);
+            this.employeeProjectsListBox.Sorted = true;
             this.employeeProjectsListBox.TabIndex = 6;
             // 
             // statesComboBox

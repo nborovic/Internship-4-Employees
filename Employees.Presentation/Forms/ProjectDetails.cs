@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Employees.Data.Enums;
 using Employees.Data.Models;
@@ -60,7 +52,9 @@ namespace Employees.Presentation.Forms
 
         private void Edit(object sender, EventArgs e)
         {
+            Hide();
             var editWindow = new CreateEditProject(_selectedProject);
+            editWindow.Closed += (s, args) => Close();
             editWindow.ShowDialog();
         }
 

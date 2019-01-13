@@ -81,7 +81,7 @@ namespace Employees.Presentation.Forms
             addedEmployeesListBox.Items.Remove(selectedProject);
         }
 
-        private bool CheckFormatInput()
+        private bool CheckInput()
         {
             var employeesList = addedEmployeesListBox.Items.Cast<Relation>().ToList();
 
@@ -103,9 +103,14 @@ namespace Employees.Presentation.Forms
                 if (projectName.Text == project.Name)
                     counter++;
 
-            if (counter > 0 && _selectedProject == null || counter > 1 && _selectedProject != null)
+            var isNameChanged = _selectedProject == null;
+
+            if (!isNameChanged)
+                isNameChanged = _selectedProject.Name != projectName.Text;
+
+            if (isNameChanged && counter > 0 || !isNameChanged && counter > 1)
             {
-                MessageBox.Show($@"+{projectName.Text} project already exists!", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($@"{projectName.Text} project already exists!", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -119,7 +124,7 @@ namespace Employees.Presentation.Forms
 
         private void Save(object sender, EventArgs e)
         {
-            if (!CheckFormatInput()) return;
+            if (!CheckInput()) return;
 
             // Removing relations
             if (_selectedProject != null)

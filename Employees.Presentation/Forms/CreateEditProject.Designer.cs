@@ -149,6 +149,7 @@
             this.addedEmployeesListBox.Location = new System.Drawing.Point(89, 408);
             this.addedEmployeesListBox.Name = "addedEmployeesListBox";
             this.addedEmployeesListBox.Size = new System.Drawing.Size(276, 100);
+            this.addedEmployeesListBox.Sorted = true;
             this.addedEmployeesListBox.TabIndex = 20;
             // 
             // employeesListBox
@@ -159,6 +160,7 @@
             this.employeesListBox.Location = new System.Drawing.Point(40, 276);
             this.employeesListBox.Name = "employeesListBox";
             this.employeesListBox.Size = new System.Drawing.Size(279, 100);
+            this.employeesListBox.Sorted = true;
             this.employeesListBox.TabIndex = 19;
             // 
             // label1

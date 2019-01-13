@@ -93,11 +93,11 @@ namespace Employees.Presentation.Forms
         }
 
         private bool CheckInput()
-        {
+        { 
             var projectsList = addedProjectsListBox.Items.Cast<Relation>().ToList();
 
             if (employeeFirstName.Text == "" || employeeLastName.Text == "" || employeeOib.Text == "" ||
-                employeeRole.SelectedItem == null || !projectsList.Any())
+                employeeRole.SelectedItem == null)
             {
                 MessageBox.Show(@"One or more fields empty!", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -115,7 +115,12 @@ namespace Employees.Presentation.Forms
                 if (employeeOib.Text == employee.Oib)
                     counter++;
 
-            if (counter > 0 && _selectedEmployee == null || counter > 1 && _selectedEmployee != null)
+            var isOibChanged = _selectedEmployee == null;
+
+            if (!isOibChanged)
+                isOibChanged = _selectedEmployee.Oib != employeeOib.Text;
+
+            if (isOibChanged && counter > 0 || !isOibChanged && counter > 1)
             {
                 MessageBox.Show($@"Employee with {employeeOib.Text} OIB already exists!", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;

@@ -70,6 +70,7 @@
             this.employeesListBox.Location = new System.Drawing.Point(50, 87);
             this.employeesListBox.Name = "employeesListBox";
             this.employeesListBox.Size = new System.Drawing.Size(401, 224);
+            this.employeesListBox.Sorted = true;
             this.employeesListBox.TabIndex = 2;
             // 
             // rolesComboBox

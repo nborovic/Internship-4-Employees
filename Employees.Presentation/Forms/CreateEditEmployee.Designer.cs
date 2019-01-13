@@ -93,6 +93,7 @@
             this.projectsListBox.Location = new System.Drawing.Point(44, 258);
             this.projectsListBox.Name = "projectsListBox";
             this.projectsListBox.Size = new System.Drawing.Size(302, 100);
+            this.projectsListBox.Sorted = true;
             this.projectsListBox.TabIndex = 5;
             // 
             // addedProjectsListBox
@@ -103,6 +104,7 @@
             this.addedProjectsListBox.Location = new System.Drawing.Point(106, 390);
             this.addedProjectsListBox.Name = "addedProjectsListBox";
             this.addedProjectsListBox.Size = new System.Drawing.Size(290, 100);
+            this.addedProjectsListBox.Sorted = true;
             this.addedProjectsListBox.TabIndex = 6;
             // 
             // weeklyWorkHours
