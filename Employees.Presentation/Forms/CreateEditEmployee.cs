@@ -94,8 +94,6 @@ namespace Employees.Presentation.Forms
 
         private bool CheckInput()
         { 
-            var projectsList = addedProjectsListBox.Items.Cast<Relation>().ToList();
-
             if (employeeFirstName.Text == "" || employeeLastName.Text == "" || employeeOib.Text == "" ||
                 employeeRole.SelectedItem == null)
             {
@@ -123,6 +121,12 @@ namespace Employees.Presentation.Forms
             if (isOibChanged && counter > 0 || !isOibChanged && counter > 1)
             {
                 MessageBox.Show($@"Employee with {employeeOib.Text} OIB already exists!", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (employeeOib.Text.TrimAndRemoveWhiteSpaces().Length < 11)
+            {
+                MessageBox.Show($@"Employee OIB doesn't have enough characters, contains: {employeeOib.Text.TrimAndRemoveWhiteSpaces().Length}! Must have: 11", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 

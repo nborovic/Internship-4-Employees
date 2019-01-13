@@ -140,19 +140,19 @@ namespace Employees.Presentation.Forms
                 _projectsRepository.Remove(_selectedProject);
             }
 
-            // Adding new employee
+            // Adding new project
             var employeesList = addedEmployeesListBox.Items.Cast<Relation>().ToList();
 
-            var projectToAdd = new Project(projectName.Text.TrimAndRemoveWhiteSpaces(), Convert.ToDateTime(projectStart.Text), Convert.ToDateTime(projectDeadline.Text));
+            var projectToAdd = new Project(projectName.Text.TrimAndRemoveMultipleWhiteSpaces(), Convert.ToDateTime(projectStart.Text), Convert.ToDateTime(projectDeadline.Text));
             _projectsRepository.Add(projectToAdd);
 
             var addedProject = _projectsRepository.GetAll().Find(x => x.Name == projectToAdd.Name);
 
-            // Adding projects to Employee.ProjectsList
+            // Adding employees to Project.EmployeesList
             foreach (var relation in employeesList)
                 addedProject.EmployeesList.Add(relation);
 
-            // Adding employee to relational projects
+            // Adding projects to relational employees
             foreach (var employee in _employeesRepository.GetAll())
                 foreach (var relation in employeesList)
                     if (relation.Employee.Equals(employee))
