@@ -118,7 +118,7 @@ namespace Employees.Presentation.Forms
         {
             if (employeeProjectListBox.SelectedItem == null)
             {
-                MessageBox.Show(@"No employee/project selected!", @"Selection");
+                MessageBox.Show(@"No employee/project selected!", @"Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -138,6 +138,9 @@ namespace Employees.Presentation.Forms
                     projectDetailsWindow.ShowDialog();
                     break;
             }
+
+            RefreshList();
+            SearchAutoComplete();
         }
 
         private void Create(object sender, EventArgs e)
@@ -146,18 +149,21 @@ namespace Employees.Presentation.Forms
             {
                 case "0":
                     Hide();
-                    var createEmployeeWindow = new CreateEmployee();
+                    var createEmployeeWindow = new CreateEditEmployee();
                     createEmployeeWindow.Closed += (s, args) => Show();
                     createEmployeeWindow.ShowDialog();
                     break;
 
                 default:
                     Hide();
-                    var createProjectWindow = new CreateProject();
+                    var createProjectWindow = new CreateEditProject();
                     createProjectWindow.Closed += (s, args) => Show();
                     createProjectWindow.ShowDialog();
                     break;
             }
+
+            RefreshList();
+            SearchAutoComplete();
         }
 
         private void Delete(object sender, EventArgs e)
@@ -165,7 +171,7 @@ namespace Employees.Presentation.Forms
             var selectedItem = employeeProjectListBox.SelectedItem;
 
             if (selectedItem == null)
-                MessageBox.Show(@"No employee/project selected!", @"Selection");
+                MessageBox.Show(@"No employee/project selected!", @"Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else if (MessageBox.Show(@"Are you sure you want to delete this employee/project?", @"Delete",
                          MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
@@ -182,7 +188,7 @@ namespace Employees.Presentation.Forms
                                 }
                                 else
                                 {
-                                    MessageBox.Show($@"You can't delete employee because he is the only one working on {project} project", @"Delete", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show($@"You can't delete employee because he is the only one working on {project}", @"Delete", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     return;
                                 }
 
@@ -194,15 +200,9 @@ namespace Employees.Presentation.Forms
                         foreach (var employee in _employeesRepository.GetAll())
                         foreach (var project in employee.ProjectsList)
                             if (project.Project.Equals(selectedItem))
-                                if (employee.ProjectsList.Count > 1)
                                 {
                                     employee.ProjectsList.Remove(project);
                                     break;
-                                }
-                                else
-                                {
-                                    MessageBox.Show($@"You can't delete project because it is the only project {employee} is working on", @"Delete", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return;
                                 }
                                 
                         _projectsRepository.Remove(employeeProjectListBox.SelectedItem as Project);

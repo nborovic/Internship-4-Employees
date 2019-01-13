@@ -35,9 +35,9 @@ namespace Employees.Presentation.Forms
             employeesListBox.Items.Clear();
                     foreach (var relation in _selectedProject.EmployeesList)
                         if (role.Contains("All"))
-                            employeesListBox.Items.Add($"{relation.Employee} - {relation.WeeklyWorkHours} weekly work hours");
+                            employeesListBox.Items.Add($"{relation.Employee} - {relation.WeeklyWorkHours} hours");
                         else if (role.Contains(relation.Employee.Role.ToString()))
-                            employeesListBox.Items.Add($"{relation.Employee} - {relation.WeeklyWorkHours} weekly work hours");
+                            employeesListBox.Items.Add($"{relation.Employee} - {relation.WeeklyWorkHours} hours");
         }
 
         public void RefreshRolesComboBox()
@@ -46,7 +46,7 @@ namespace Employees.Presentation.Forms
             foreach (var role in (Role[]) Enum.GetValues(typeof(Role)))
                 if (_employeesRepository.CountOfEmployees(_selectedProject, role) > 0) { 
                     rolesComboBox.Items.Add($"{role} ({_employeesRepository.CountOfEmployees(_selectedProject, role)})");
-                    allCount++;
+                    allCount += _employeesRepository.CountOfEmployees(_selectedProject, role);
                 }
 
             rolesComboBox.Items.Add($"All ({allCount})");
@@ -60,8 +60,13 @@ namespace Employees.Presentation.Forms
 
         private void Edit(object sender, EventArgs e)
         {
-            var editWindow = new CreateProject(_selectedProject);
+            var editWindow = new CreateEditProject(_selectedProject);
             editWindow.ShowDialog();
+        }
+
+        private void Back(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

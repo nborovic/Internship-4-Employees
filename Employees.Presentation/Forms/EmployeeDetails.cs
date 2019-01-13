@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Employees.Data.Enums;
 using Employees.Data.Models;
@@ -51,18 +45,19 @@ namespace Employees.Presentation.Forms
             employeeProjectsListBox.Items.Clear();
             foreach (var relation in _selectedEmployee.ProjectsList)
                 if (state.Contains(relation.Project.State.ToString()))
-                    employeeProjectsListBox.Items.Add(relation.Project);
+                    employeeProjectsListBox.Items.Add($"{relation.Project} - {relation.WeeklyWorkHours} hours");
                 else if (state.Contains("All"))
-                    employeeProjectsListBox.Items.Add(relation.Project);
+                    employeeProjectsListBox.Items.Add($"{relation.Project} - {relation.WeeklyWorkHours} hours");
         }
 
         private void RefreshProjectStateComboBox()
         {
             var allCount = 0;
+
             foreach (var state in (State[]) Enum.GetValues(typeof(State)))
                 if (_projectsRepository.CountOfProjects(_selectedEmployee, state) > 0) {          
                     statesComboBox.Items.Add($"{state} ({_projectsRepository.CountOfProjects(_selectedEmployee, state)})");
-                    allCount++;
+                    allCount += _projectsRepository.CountOfProjects(_selectedEmployee, state);
                 }
 
             statesComboBox.Items.Add($"All ({allCount})");
@@ -77,7 +72,7 @@ namespace Employees.Presentation.Forms
         private void Edit(object sender, EventArgs e)
         {
             Hide();
-            var editWindow = new CreateEmployee(Employee);
+            var editWindow = new CreateEditEmployee(_selectedEmployee);
             editWindow.Closed += (s, args) => Close();
             editWindow.ShowDialog();
         }

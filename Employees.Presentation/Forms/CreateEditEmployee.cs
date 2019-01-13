@@ -8,27 +8,27 @@ using Employees.Infrastructure.Extensions;
 
 namespace Employees.Presentation.Forms
 {
-    public partial class CreateEmployee : Form
+    public partial class CreateEditEmployee : Form
     {
         private readonly EmployeesRepository _employeesRepository = new EmployeesRepository();
         private readonly ProjectsRepository _projectsRepository = new ProjectsRepository();
-        private readonly Employee _selectedEmployee = null;
+        private readonly Employee _selectedEmployee;
 
-        public CreateEmployee()
+        public CreateEditEmployee()
         {
             InitializeComponent();
             RefreshProjectsList();
             RefreshRoles();
         }
 
-        public CreateEmployee(Employee selectedEmployee)
+        public CreateEditEmployee(Employee selectedEmployee)
         {
             InitializeComponent();
             _selectedEmployee = selectedEmployee;
             employeeFirstName.Text = selectedEmployee.FirstName;
             employeeLastName.Text = selectedEmployee.LastName;
             employeeOib.Text = selectedEmployee.Oib;
-            employeeBirthday.Text = selectedEmployee.Birthday.ToString();
+            employeeBirthday.Text = selectedEmployee.Birthday.ToString("D");
             RefreshAddedProjectsList();
             RefreshRoles();
             employeeRole.SelectedItem = selectedEmployee.Role;
@@ -67,10 +67,9 @@ namespace Employees.Presentation.Forms
 
         private void Add(object sender, EventArgs e)
         {
-            if (weeklyWorkHours.Text == "" || projectsListBox.SelectedItem == null ||
-                int.Parse(weeklyWorkHours.Text) == 0)
+            if (weeklyWorkHours.Text == "" || projectsListBox.SelectedItem == null || int.Parse(weeklyWorkHours.Text) == 0)
             {
-                MessageBox.Show(@"No project selected or weekly work hours not inputted!", @"Selection");
+                MessageBox.Show(@"No project selected or weekly work hours not inputted!", @"Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -85,7 +84,7 @@ namespace Employees.Presentation.Forms
 
             if (selectedProject == null)
             {
-                MessageBox.Show(@"No project selected!", @"Selection");
+                MessageBox.Show(@"No project selected!", @"Selection", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -93,33 +92,47 @@ namespace Employees.Presentation.Forms
             addedProjectsListBox.Items.Remove(selectedProject);
         }
 
-        private bool CheckFormatInput()
+        private bool CheckInput()
         {
             var projectsList = addedProjectsListBox.Items.Cast<Relation>().ToList();
 
             if (employeeFirstName.Text == "" || employeeLastName.Text == "" || employeeOib.Text == "" ||
                 employeeRole.SelectedItem == null || !projectsList.Any())
             {
-                MessageBox.Show(@"One or more fields empty!", @"Invalid input");
+                MessageBox.Show(@"One or more fields empty!", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
+            if (employeeFirstName.Text.Length + employeeLastName.Text.Length > 25)
+            {
+                MessageBox.Show($@"Employee's full name is too long, contains: {employeeFirstName.Text.Length + employeeLastName.Text.Length} characters! Limit: 25", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            var counter = 0;
+
             foreach (var employee in _employeesRepository.GetAll())
                 if (employeeOib.Text == employee.Oib)
-                {
-                    MessageBox.Show($@"Employee with {employeeOib.Text} OIB already exists!", @"Invalid input");
-                    return false;
-                }
+                    counter++;
+
+            if (counter > 0 && _selectedEmployee == null || counter > 1 && _selectedEmployee != null)
+            {
+                MessageBox.Show($@"Employee with {employeeOib.Text} OIB already exists!", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
 
             var birthday = Convert.ToDateTime(employeeBirthday.Text);
 
             if (DateTime.Now - birthday >= DateTime.Now - DateTime.Now.AddYears(-18)) return true;
-            MessageBox.Show(@"Employee is younger than 18 years old", @"Invalid input");
+            MessageBox.Show(@"Employee is younger than 18 years old", @"Invalid input", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
         }
 
         private void Save(object sender, EventArgs e)
         {
+            if (!CheckInput()) return;
+
+            // Removing relations
             if (_selectedEmployee != null)
             {
                 foreach (var project in _projectsRepository.GetAll())
@@ -133,9 +146,9 @@ namespace Employees.Presentation.Forms
                 _employeesRepository.Remove(_selectedEmployee);
             }
 
+            // Adding new employee
             var projectsList = addedProjectsListBox.Items.Cast<Relation>().ToList();
 
-            if (!CheckFormatInput()) return;
             var employeeToAdd = new Employee(employeeFirstName.Text.NameFormatting(),
                 employeeLastName.Text.NameFormatting(), employeeOib.Text, Convert.ToDateTime(employeeBirthday.Text),
                 (Role) employeeRole.SelectedItem);
@@ -143,9 +156,11 @@ namespace Employees.Presentation.Forms
 
             var addedEmployee = _employeesRepository.GetAll().Find(x => x.Oib == employeeToAdd.Oib);
 
+            // Adding projects to Employee.ProjectsList
             foreach (var relationProject in projectsList)
                 addedEmployee.ProjectsList.Add(relationProject);
 
+            // Adding employee to relational projects
             foreach (var project in _projectsRepository.GetAll())
                 foreach (var relation in projectsList)
                     if (relation.Project.Equals(project))
@@ -154,17 +169,12 @@ namespace Employees.Presentation.Forms
                         break;
                     }
 
-            var employeeDetailsWindow = new EmployeeDetails(addedEmployee);
-            employeeDetailsWindow.ShowDialog();
             Close();
         }
 
         private void Back(object sender, EventArgs e)
         {
-            Hide();
-            var employeeDetailsWindow = new EmployeeDetails(_selectedEmployee);
-            employeeDetailsWindow.Closed += (s, args) => Close();
-            employeeDetailsWindow.ShowDialog();
+            Close();
         }
     }
 }

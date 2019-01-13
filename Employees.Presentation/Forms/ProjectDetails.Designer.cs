@@ -33,17 +33,18 @@
             this.employeesListBox = new System.Windows.Forms.ListBox();
             this.rolesComboBox = new System.Windows.Forms.ComboBox();
             this.editButton = new System.Windows.Forms.Button();
+            this.backButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // projectNameTextBox
             // 
             this.projectNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.projectNameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.projectNameTextBox.Location = new System.Drawing.Point(121, 12);
+            this.projectNameTextBox.Location = new System.Drawing.Point(50, 12);
             this.projectNameTextBox.Multiline = true;
             this.projectNameTextBox.Name = "projectNameTextBox";
             this.projectNameTextBox.ReadOnly = true;
-            this.projectNameTextBox.Size = new System.Drawing.Size(262, 38);
+            this.projectNameTextBox.Size = new System.Drawing.Size(401, 39);
             this.projectNameTextBox.TabIndex = 0;
             this.projectNameTextBox.Text = "placeholder";
             this.projectNameTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -52,11 +53,11 @@
             // 
             this.projectStartDeadlineTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.projectStartDeadlineTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.projectStartDeadlineTextBox.Location = new System.Drawing.Point(121, 43);
+            this.projectStartDeadlineTextBox.Location = new System.Drawing.Point(50, 43);
             this.projectStartDeadlineTextBox.Multiline = true;
             this.projectStartDeadlineTextBox.Name = "projectStartDeadlineTextBox";
             this.projectStartDeadlineTextBox.ReadOnly = true;
-            this.projectStartDeadlineTextBox.Size = new System.Drawing.Size(262, 38);
+            this.projectStartDeadlineTextBox.Size = new System.Drawing.Size(401, 38);
             this.projectStartDeadlineTextBox.TabIndex = 1;
             this.projectStartDeadlineTextBox.Text = "placeholder";
             this.projectStartDeadlineTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -93,11 +94,23 @@
             this.editButton.UseVisualStyleBackColor = true;
             this.editButton.Click += new System.EventHandler(this.Edit);
             // 
+            // backButton
+            // 
+            this.backButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.backButton.Location = new System.Drawing.Point(12, 383);
+            this.backButton.Name = "backButton";
+            this.backButton.Size = new System.Drawing.Size(57, 32);
+            this.backButton.TabIndex = 22;
+            this.backButton.Text = "Back";
+            this.backButton.UseVisualStyleBackColor = true;
+            this.backButton.Click += new System.EventHandler(this.Back);
+            // 
             // ProjectDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(505, 427);
+            this.Controls.Add(this.backButton);
             this.Controls.Add(this.editButton);
             this.Controls.Add(this.rolesComboBox);
             this.Controls.Add(this.employeesListBox);
@@ -117,5 +130,6 @@
         private System.Windows.Forms.ListBox employeesListBox;
         private System.Windows.Forms.ComboBox rolesComboBox;
         private System.Windows.Forms.Button editButton;
+        private System.Windows.Forms.Button backButton;
     }
 }

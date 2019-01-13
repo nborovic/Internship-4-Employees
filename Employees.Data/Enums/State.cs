@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Employees.Data.Enums
+﻿namespace Employees.Data.Enums
 {
     public enum State
     {

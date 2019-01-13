@@ -46,17 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\CreateEmployee.cs">
+    <Compile Include="Forms\CreateEditEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\CreateEmployee.Designer.cs">
-      <DependentUpon>CreateEmployee.cs</DependentUpon>
+    <Compile Include="Forms\CreateEditEmployee.Designer.cs">
+      <DependentUpon>CreateEditEmployee.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\CreateProject.cs">
+    <Compile Include="Forms\CreateEditProject.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\CreateProject.Designer.cs">
-      <DependentUpon>CreateProject.cs</DependentUpon>
+    <Compile Include="Forms\CreateEditProject.Designer.cs">
+      <DependentUpon>CreateEditProject.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\EmployeeDetails.cs">
       <SubType>Form</SubType>
@@ -78,11 +78,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\CreateEmployee.resx">
-      <DependentUpon>CreateEmployee.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CreateEditEmployee.resx">
+      <DependentUpon>CreateEditEmployee.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CreateProject.resx">
-      <DependentUpon>CreateProject.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CreateEditProject.resx">
+      <DependentUpon>CreateEditProject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EmployeeDetails.resx">
       <DependentUpon>EmployeeDetails.cs</DependentUpon>

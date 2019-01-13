@@ -47,7 +47,7 @@
             this.employeeToStringTextBox.Location = new System.Drawing.Point(40, 12);
             this.employeeToStringTextBox.Name = "employeeToStringTextBox";
             this.employeeToStringTextBox.ReadOnly = true;
-            this.employeeToStringTextBox.Size = new System.Drawing.Size(289, 24);
+            this.employeeToStringTextBox.Size = new System.Drawing.Size(382, 24);
             this.employeeToStringTextBox.TabIndex = 0;
             this.employeeToStringTextBox.Text = "placeholder";
             this.employeeToStringTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -98,7 +98,7 @@
             // weeklyWorkHoursColoredIndicator
             // 
             this.weeklyWorkHoursColoredIndicator.FormattingEnabled = true;
-            this.weeklyWorkHoursColoredIndicator.Location = new System.Drawing.Point(320, 106);
+            this.weeklyWorkHoursColoredIndicator.Location = new System.Drawing.Point(404, 106);
             this.weeklyWorkHoursColoredIndicator.Name = "weeklyWorkHoursColoredIndicator";
             this.weeklyWorkHoursColoredIndicator.Size = new System.Drawing.Size(18, 17);
             this.weeklyWorkHoursColoredIndicator.TabIndex = 5;
@@ -110,14 +110,14 @@
             this.employeeProjectsListBox.ItemHeight = 20;
             this.employeeProjectsListBox.Location = new System.Drawing.Point(40, 129);
             this.employeeProjectsListBox.Name = "employeeProjectsListBox";
-            this.employeeProjectsListBox.Size = new System.Drawing.Size(298, 184);
+            this.employeeProjectsListBox.Size = new System.Drawing.Size(382, 184);
             this.employeeProjectsListBox.TabIndex = 6;
             // 
             // statesComboBox
             // 
             this.statesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.statesComboBox.FormattingEnabled = true;
-            this.statesComboBox.Location = new System.Drawing.Point(91, 319);
+            this.statesComboBox.Location = new System.Drawing.Point(151, 319);
             this.statesComboBox.Name = "statesComboBox";
             this.statesComboBox.Size = new System.Drawing.Size(178, 21);
             this.statesComboBox.TabIndex = 7;
@@ -126,7 +126,7 @@
             // editButton
             // 
             this.editButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.editButton.Location = new System.Drawing.Point(130, 357);
+            this.editButton.Location = new System.Drawing.Point(193, 357);
             this.editButton.Name = "editButton";
             this.editButton.Size = new System.Drawing.Size(99, 32);
             this.editButton.TabIndex = 8;
@@ -149,7 +149,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(380, 401);
+            this.ClientSize = new System.Drawing.Size(460, 409);
             this.Controls.Add(this.backButton);
             this.Controls.Add(this.editButton);
             this.Controls.Add(this.statesComboBox);
