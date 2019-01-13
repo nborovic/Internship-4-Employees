@@ -108,7 +108,7 @@ namespace Employees.Presentation.Forms
 
                     break;
             }
-         
+
             searchTextBox.AutoCompleteSource = AutoCompleteSource.CustomSource;
             searchTextBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             searchTextBox.AutoCompleteCustomSource.AddRange(employeeProjectArray);
@@ -146,19 +146,62 @@ namespace Employees.Presentation.Forms
                     break;
 
                 default:
-                    var projectDetailsWindow = new ProjectDetails(employeeProjectListBox.SelectedItem as Project);
-                    projectDetailsWindow.ShowDialog();
+                    var createProjectWindow = new CreateProject();
+                    createProjectWindow.ShowDialog();
                     break;
             }
         }
 
         private void Delete(object sender, EventArgs e)
         {
-            if (employeeProjectListBox.SelectedItem == null)
+            var selectedItem = employeeProjectListBox.SelectedItem;
+
+            if (selectedItem == null)
                 MessageBox.Show(@"No employee/project selected!", @"Selection");
             else if (MessageBox.Show(@"Are you sure you want to delete this employee/project?", @"Delete",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                employeeProjectListBox.Items.Remove(employeeProjectListBox.SelectedItem);
+                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                switch (_option)
+                {
+                    case "0":
+                        foreach (var project in _projectsRepository.GetAll())
+                        foreach (var relation in project.EmployeesList)
+                            if (relation.Employee.Equals(selectedItem))
+                                if (project.EmployeesList.Count > 1)
+                                {
+                                    project.EmployeesList.Remove(relation);
+                                    break;
+                                }
+                                else
+                                {
+                                    MessageBox.Show($@"You can't delete employee because he is the only one working on {project} project", @"Delete", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+
+                        _employeesRepository.Remove(selectedItem as Employee);
+                        employeeProjectListBox.Items.Remove(selectedItem);
+                        break;
+
+                    default:
+                        foreach (var employee in _employeesRepository.GetAll())
+                        foreach (var project in employee.ProjectsList)
+                            if (project.Project.Equals(selectedItem))
+                                if (employee.ProjectsList.Count > 1)
+                                {
+                                    employee.ProjectsList.Remove(project);
+                                    break;
+                                }
+                                else
+                                {
+                                    MessageBox.Show($@"You can't delete project because it is the only project {employee} is working on", @"Delete", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                                
+                        _projectsRepository.Remove(employeeProjectListBox.SelectedItem as Project);
+                        employeeProjectListBox.Items.Remove(selectedItem);
+                        break;
+                }
+            }
         }
     }
 }
