@@ -52,6 +52,12 @@
     <Compile Include="Forms\CreateEmployee.Designer.cs">
       <DependentUpon>CreateEmployee.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\CreateProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateProject.Designer.cs">
+      <DependentUpon>CreateProject.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EmployeeDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\CreateEmployee.resx">
       <DependentUpon>CreateEmployee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreateProject.resx">
+      <DependentUpon>CreateProject.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EmployeeDetails.resx">
       <DependentUpon>EmployeeDetails.cs</DependentUpon>

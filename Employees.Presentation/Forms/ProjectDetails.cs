@@ -57,5 +57,11 @@ namespace Employees.Presentation.Forms
         {
             RefreshEmployeesListBox(rolesComboBox.Text);
         }
+
+        private void Edit(object sender, EventArgs e)
+        {
+            var editWindow = new CreateProject(_selectedProject);
+            editWindow.ShowDialog();
+        }
     }
 }
